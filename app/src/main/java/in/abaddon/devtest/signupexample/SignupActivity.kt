@@ -10,6 +10,6 @@ class SignupActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_signup)
     }
 }

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SignupExample</string>
+    <string name="hint_name">Your Name</string>
+    <string name="hint_email">Your E-mail Address</string>
+    <string name="hint_birthday">Your Birthday</string>
+    <string name="label_register">Sign up</string>
 </resources>
