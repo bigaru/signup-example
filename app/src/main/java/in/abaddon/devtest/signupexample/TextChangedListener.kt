@@ -3,6 +3,7 @@ package `in`.abaddon.devtest.signupexample
 import android.text.Editable
 import android.text.TextWatcher
 
+// TODO add debouncing
 class TextChangedListener(val onChanged: (String)->Unit): TextWatcher {
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
     }

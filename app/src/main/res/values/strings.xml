@@ -2,6 +2,10 @@
     <string name="app_name">SignupExample</string>
     <string name="hint_name">Your Name</string>
     <string name="hint_email">Your E-mail Address</string>
-    <string name="hint_birthday">Your Birthday</string>
+    <string name="hint_birthday">Your Birthday dd.mm.yyyy</string>
     <string name="label_register">Sign up</string>
+
+    <string name="msg_is_required">It is required</string>
+    <string name="msg_email_invalid">This email is invalid.</string>
+    <string name="msg_date_invalid">The date must be between 01.01.1900 – 31.12.2019.</string>
 </resources>
