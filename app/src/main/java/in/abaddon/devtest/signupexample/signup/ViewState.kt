@@ -7,6 +7,7 @@ data class ViewState(
     val emailError: String?,
     val birthday: String,
     val birthdayError: String?,
+    val effect: Effect?
 ){
     fun hasError(): Boolean {
         return nameError != null || emailError != null || birthdayError != null
@@ -20,3 +21,6 @@ data class ViewState(
         return !hasError() && areAllValueSet()
     }
 }
+
+sealed class Effect()
+data class ShowToast(val msg: String): Effect()

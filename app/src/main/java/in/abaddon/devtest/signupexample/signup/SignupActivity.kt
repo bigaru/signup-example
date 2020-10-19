@@ -5,6 +5,7 @@ import `in`.abaddon.devtest.signupexample.TextChangedListener
 import `in`.abaddon.devtest.signupexample.databinding.ActivitySignupBinding
 import `in`.abaddon.devtest.signupexample.di.ViewModelFactory
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +28,19 @@ class SignupActivity : AppCompatActivity() {
 
         root.vm = viewModel
         root.lifecycleOwner = this
+
+        root.submitButton.setOnClickListener { viewModel.dispatch(SubmitPressed) }
+
+        viewModel.viewState.observe(this, {renderEffects(it)})
+    }
+
+    private fun renderEffects(viewState: ViewState){
+        when(viewState.effect){
+            is ShowToast -> {
+                Toast.makeText(this, viewState.effect.msg, Toast.LENGTH_SHORT).show()
+                viewModel.dispatch(ToastDisplayed)
+            }
+        }
     }
 
     private fun initEdittexts(){
