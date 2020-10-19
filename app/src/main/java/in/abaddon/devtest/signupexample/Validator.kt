@@ -1,6 +1,8 @@
 package `in`.abaddon.devtest.signupexample
 
 import android.content.Context
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import javax.inject.Inject
 
 interface Validator {
@@ -42,10 +44,16 @@ class SimpleValidator @Inject constructor(val ctx: Context): Validator {
         return null
     }
 
-    // TODO better date validator
     override fun validateBirthday(birthday: String): String? {
-        val regex = "^(0?[1-9]|[12][0-9]|3[01])\\.(0?[1-9]|1[012])\\.(19\\d\\d|20[01][0-9])$".toRegex()
-        if(!birthday.trim().matches(regex)){
+        val pattern = DateTimeFormat.forPattern("dd.MM.yyyy")
+
+        try {
+            val validDate = DateTime.parse(birthday, pattern)
+
+            if(1900 > validDate.year || validDate.year > 2019) {
+                throw IllegalArgumentException()
+            }
+        } catch (e: Exception) {
             return ctx.getString(R.string.msg_date_invalid)
         }
 
