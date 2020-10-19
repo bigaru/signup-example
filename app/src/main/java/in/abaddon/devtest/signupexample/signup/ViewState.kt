@@ -11,4 +11,12 @@ data class ViewState(
     fun hasError(): Boolean {
         return nameError != null || emailError != null || birthdayError != null
     }
+
+    fun areAllValueSet(): Boolean {
+        return name.isNotBlank() && email.isNotBlank() && birthday.isNotBlank()
+    }
+
+    fun isSubmitable(): Boolean {
+        return !hasError() && areAllValueSet()
+    }
 }
