@@ -3,8 +3,9 @@ package `in`.abaddon.devtest.signupexample.signup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import javax.inject.Inject
 
-class SignupViewModel: ViewModel(){
+class SignupViewModel @Inject constructor(): ViewModel(){
     companion object {
         private val initialState = ViewState("", null, "", null, "", null)
 
