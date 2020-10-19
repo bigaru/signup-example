@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="vm"
+            type="in.abaddon.devtest.signupexample.signup.SignupViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            app:error="@{vm.viewState.nameError}"
             app:hintTextAppearance="@style/IncreasedHintSize">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -32,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            app:error="@{vm.viewState.emailError}"
             app:hintTextAppearance="@style/IncreasedHintSize">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -48,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            app:error="@{vm.viewState.birthdayError}"
             app:hintTextAppearance="@style/IncreasedHintSize">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -64,6 +73,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="@{!vm.viewState.hasError()}"
             android:text="@string/label_register"
             android:textSize="18sp" />
     </LinearLayout>

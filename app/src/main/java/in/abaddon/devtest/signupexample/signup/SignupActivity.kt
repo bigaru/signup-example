@@ -1,6 +1,7 @@
 package `in`.abaddon.devtest.signupexample.signup
 
 import `in`.abaddon.devtest.signupexample.R
+import `in`.abaddon.devtest.signupexample.TextChangedListener
 import `in`.abaddon.devtest.signupexample.databinding.ActivitySignupBinding
 import `in`.abaddon.devtest.signupexample.di.ViewModelFactory
 import android.os.Bundle
@@ -12,20 +13,33 @@ import javax.inject.Inject
 
 class SignupActivity : AppCompatActivity() {
     @Inject lateinit var viewModelFactory: ViewModelFactory
-    lateinit var signupBinding: ActivitySignupBinding
+    lateinit var root: ActivitySignupBinding
+    lateinit var viewModel: SignupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
 
         super.onCreate(savedInstanceState)
-        signupBinding = DataBindingUtil.setContentView(this, R.layout.activity_signup)
+        root = DataBindingUtil.setContentView(this, R.layout.activity_signup)
 
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(SignupViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SignupViewModel::class.java)
+        initEdittexts()
 
-        // TODO use BindingAdapter instead
-        viewModel.viewState.observe(this){render(it)}
+        root.vm = viewModel
+        root.lifecycleOwner = this
     }
 
-    private fun render(viewState: ViewState) {
+    private fun initEdittexts(){
+        root.fieldEmail.addTextChangedListener(
+            TextChangedListener{viewModel.dispatch(EmailEntered(it))}
+        )
+
+        root.fieldName.addTextChangedListener(
+            TextChangedListener{viewModel.dispatch(NameEntered(it))}
+        )
+
+        root.fieldBirthday.addTextChangedListener(
+            TextChangedListener{viewModel.dispatch(BirthdayEntered(it))}
+        )
     }
 }

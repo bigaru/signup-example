@@ -7,4 +7,8 @@ data class ViewState(
     val emailError: String?,
     val birthday: String,
     val birthdayError: String?,
-){}
+){
+    fun hasError(): Boolean {
+        return nameError != null || emailError != null || birthdayError != null
+    }
+}
