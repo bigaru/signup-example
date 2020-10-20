@@ -22,7 +22,7 @@ class TextChangedListener(val onChanged: (String)->Unit): TextWatcher {
             onChanged(value)
         }
 
-        handler.postDelayed(runnable, 900)
+        handler.postDelayed(runnable, 500)
     }
 
 }

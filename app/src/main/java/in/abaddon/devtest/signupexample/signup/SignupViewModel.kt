@@ -4,7 +4,7 @@ import `in`.abaddon.devtest.signupexample.R
 import `in`.abaddon.devtest.signupexample.UnidirectedViewModel
 import `in`.abaddon.devtest.signupexample.Validator
 import `in`.abaddon.devtest.signupexample.model.User
-import `in`.abaddon.devtest.signupexample.model.UserDB
+import `in`.abaddon.devtest.signupexample.model.UserDao
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class SignupViewModel @Inject constructor(
     val validator: Validator,
-    val userDB: UserDB
+    val userDao: UserDao
 ): UnidirectedViewModel<Action,ViewState>(ViewState(),reducer){
     companion object {
         // keep it inside companion object to enforce to be free of side-effects
@@ -65,13 +65,11 @@ class SignupViewModel @Inject constructor(
             val state = viewState.value!!
             val user = User(0, state.name, state.email, state.birthday)
 
-            val dao = userDB.userDao()
-
             // simulate any potential delays
             //delay(5000)
 
             try {
-                val id = dao.insert(user)
+                val id = userDao.insert(user)
                 dispatch(DataInserted(id))
             } catch (e: SQLiteConstraintException){
                 dispatch(DataInsertionFailed(R.string.msg_submission_failed))

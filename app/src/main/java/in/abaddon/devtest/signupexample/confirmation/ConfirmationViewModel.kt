@@ -2,14 +2,14 @@ package `in`.abaddon.devtest.signupexample.confirmation
 
 import `in`.abaddon.devtest.signupexample.R
 import `in`.abaddon.devtest.signupexample.UnidirectedViewModel
-import `in`.abaddon.devtest.signupexample.model.UserDB
+import `in`.abaddon.devtest.signupexample.model.UserDao
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ConfirmationViewModel @Inject constructor(
-    val userDB: UserDB
+    val userDao: UserDao
 ): UnidirectedViewModel<Action,ViewState>(ViewState(), reducer){
     companion object {
         // keep it inside companion object to enforce to be free of side-effects
@@ -39,7 +39,7 @@ class ConfirmationViewModel @Inject constructor(
 
     private fun fetchUser(id: Long){
         viewModelScope.launch(Dispatchers.IO) {
-            val maybeUser = userDB.userDao().findById(id)
+            val maybeUser = userDao.findById(id)
 
             // simulate any potential delays
             //delay(5000)

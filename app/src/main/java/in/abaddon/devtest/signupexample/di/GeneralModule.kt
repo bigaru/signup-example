@@ -3,15 +3,15 @@ package `in`.abaddon.devtest.signupexample.di
 import `in`.abaddon.devtest.signupexample.SimpleValidator
 import `in`.abaddon.devtest.signupexample.Validator
 import `in`.abaddon.devtest.signupexample.model.UserDB
+import `in`.abaddon.devtest.signupexample.model.UserDao
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 
 
 @Module
-class GeneralModule(val application: Application) {
+class GeneralModule(application: Application) {
     val db: UserDB
 
     init {
@@ -24,12 +24,7 @@ class GeneralModule(val application: Application) {
     }
 
     @Provides
-    fun provideContext(): Context{
-        return application
-    }
-
-    @Provides
-    fun provideDao(): UserDB {
-        return db
+    fun provideDao(): UserDao {
+        return db.userDao()
     }
 }
