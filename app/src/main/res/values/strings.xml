@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">SignupExample</string>
+    <string name="title_signup">Sign up</string>
+    <string name="title_confirmation">Confirmation</string>
+
     <string name="hint_name">Your Name</string>
     <string name="hint_email">Your E-mail Address</string>
     <string name="hint_birthday">Your Birthday dd.mm.yyyy</string>

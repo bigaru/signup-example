@@ -27,6 +27,7 @@ class SignupActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(SignupViewModel::class.java)
         initEdittexts()
+        setTitle(R.string.title_signup)
 
         root.vm = viewModel
         root.lifecycleOwner = this

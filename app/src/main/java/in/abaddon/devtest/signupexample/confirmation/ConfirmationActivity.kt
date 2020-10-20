@@ -5,6 +5,7 @@ import `in`.abaddon.devtest.signupexample.databinding.ActivityConfirmationBindin
 import `in`.abaddon.devtest.signupexample.di.ViewModelFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
@@ -29,5 +30,19 @@ class ConfirmationActivity : AppCompatActivity() {
 
         val createdId = intent.getLongExtra(NEWLY_CREATED_ID, -1)
         viewModel.dispatch(LoadUser(createdId))
+
+        setTitle(R.string.title_confirmation)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            android.R.id.home -> {
+                finish()
+                return true;
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
