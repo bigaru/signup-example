@@ -16,4 +16,4 @@ object SubmitPressed: Action()
 data class DataInserted(val id: Long): Action()
 data class DataInsertionFailed(@StringRes val msgId: Int): Action()
 
-object ToastDisplayed: Action()
+object EffectFired: Action()

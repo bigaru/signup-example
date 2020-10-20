@@ -30,10 +30,9 @@ class SignupViewModel @Inject constructor(
                 is BirthdayValidated -> prevState.copy(birthdayError = action.msgId)
 
                 is SubmitPressed -> prevState.copy(isLoading = true)
-                // TODO pass newly created Id
-                is DataInserted -> prevState.copy(isLoading = false)
+                is DataInserted -> prevState.copy(effect = OpenConfirmation(action.id), isLoading = false)
                 is DataInsertionFailed -> prevState.copy(effect = ShowToast(action.msgId), isLoading = false)
-                is ToastDisplayed -> prevState.copy(effect = null)
+                is EffectFired -> prevState.copy(effect = null)
             }
         }
     }

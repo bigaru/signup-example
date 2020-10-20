@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 
 sealed class Effect()
 data class ShowToast(@StringRes val msgId: Int): Effect()
+data class OpenConfirmation(val createdUserId: Long): Effect()
 
 data class ViewState(
                val name: String         = "",
