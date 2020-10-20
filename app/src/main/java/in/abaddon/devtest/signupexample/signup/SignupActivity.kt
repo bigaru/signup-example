@@ -45,6 +45,8 @@ class SignupActivity : AppCompatActivity() {
 
             is OpenConfirmation -> {
                 val intent = Intent(this, ConfirmationActivity::class.java)
+                intent.putExtra(ConfirmationActivity.NEWLY_CREATED_ID, viewState.effect.createdUserId)
+
                 startActivity(intent)
                 viewModel.dispatch(EffectFired)
             }
