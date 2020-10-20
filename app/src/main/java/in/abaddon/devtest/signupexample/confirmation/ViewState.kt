@@ -9,4 +9,8 @@ data class ViewState(
                val user: User? = null,
     @StringRes val heroText: Int? = null,
     @ColorRes  val heroColor: Int? = null
-)
+){
+    fun isContentVisible(): Boolean {
+        return !isLoading && user != null
+    }
+}
