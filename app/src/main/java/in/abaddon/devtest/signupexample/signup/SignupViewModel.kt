@@ -1,5 +1,6 @@
 package `in`.abaddon.devtest.signupexample.signup
 
+import `in`.abaddon.devtest.signupexample.R
 import `in`.abaddon.devtest.signupexample.Validator
 import `in`.abaddon.devtest.signupexample.model.User
 import `in`.abaddon.devtest.signupexample.model.UserDB
@@ -24,13 +25,14 @@ class SignupViewModel @Inject constructor(
                 is EmailEntered -> prevState.copy(email = action.newValue)
                 is BirthdayEntered -> prevState.copy(birthday = action.newValue)
 
-                is NameValidated -> prevState.copy(nameError = action.msg)
-                is EmailValidated -> prevState.copy(emailError = action.msg)
-                is BirthdayValidated -> prevState.copy(birthdayError = action.msg)
+                is NameValidated -> prevState.copy(nameError = action.msgId)
+                is EmailValidated -> prevState.copy(emailError = action.msgId)
+                is BirthdayValidated -> prevState.copy(birthdayError = action.msgId)
 
                 is SubmitPressed -> prevState.copy(isLoading = true)
-                is DataInserted -> prevState.copy(effect = ShowToast("User inserted: ${action.id}"), isLoading = false)
-                is DataInsertionFailed -> prevState.copy(effect = ShowToast(action.msg), isLoading = false)
+                // TODO pass newly created Id
+                is DataInserted -> prevState.copy(isLoading = false)
+                is DataInsertionFailed -> prevState.copy(effect = ShowToast(action.msgId), isLoading = false)
                 is ToastDisplayed -> prevState.copy(effect = null)
             }
         }
@@ -95,7 +97,7 @@ class SignupViewModel @Inject constructor(
                 val id = dao.insert(user)
                 _action.postValue(DataInserted(id))
             } catch (e: SQLiteConstraintException){
-                _action.postValue(DataInsertionFailed("Unfortunately this email already exists."))
+                _action.postValue(DataInsertionFailed(R.string.msg_submission_failed))
             }
         }
     }

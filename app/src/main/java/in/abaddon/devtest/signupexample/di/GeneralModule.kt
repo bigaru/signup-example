@@ -19,8 +19,8 @@ class GeneralModule(val application: Application) {
     }
 
     @Provides
-    fun provideValidator(ctx: Context): Validator{
-        return SimpleValidator(ctx)
+    fun provideValidator(): Validator{
+        return SimpleValidator()
     }
 
     @Provides

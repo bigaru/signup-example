@@ -1,17 +1,19 @@
 package `in`.abaddon.devtest.signupexample.signup
 
+import androidx.annotation.StringRes
+
 sealed class Effect()
-data class ShowToast(val msg: String): Effect()
+data class ShowToast(@StringRes val msgId: Int): Effect()
 
 data class ViewState(
-    val name: String = "",
-    val nameError: String? = null,
-    val email: String = "",
-    val emailError: String? = null,
-    val birthday: String = "",
-    val birthdayError: String? = null,
-    val isLoading: Boolean = false,
-    val effect: Effect? = null
+               val name: String         = "",
+    @StringRes val nameError: Int?      = null,
+               val email: String        = "",
+    @StringRes val emailError: Int?     = null,
+               val birthday: String     = "",
+    @StringRes val birthdayError: Int?  = null,
+               val isLoading: Boolean   = false,
+               val effect: Effect?      = null
 ){
     fun hasError(): Boolean {
         return nameError != null || emailError != null || birthdayError != null

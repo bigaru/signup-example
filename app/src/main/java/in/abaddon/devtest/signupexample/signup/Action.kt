@@ -1,17 +1,19 @@
 package `in`.abaddon.devtest.signupexample.signup
 
+import androidx.annotation.StringRes
+
 sealed class Action()
 data class NameEntered(val newValue: String): Action()
-data class NameValidated(val msg: String?): Action()
+data class NameValidated(@StringRes val msgId: Int?): Action()
 
 data class EmailEntered(val newValue: String): Action()
-data class EmailValidated(val msg: String?): Action()
+data class EmailValidated(@StringRes val msgId: Int?): Action()
 
 data class BirthdayEntered(val newValue: String): Action()
-data class BirthdayValidated(val msg: String?): Action()
+data class BirthdayValidated(@StringRes val msgId: Int?): Action()
 
 object SubmitPressed: Action()
 data class DataInserted(val id: Long): Action()
-data class DataInsertionFailed(val msg: String): Action()
+data class DataInsertionFailed(@StringRes val msgId: Int): Action()
 
 object ToastDisplayed: Action()

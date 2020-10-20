@@ -8,4 +8,5 @@
     <string name="msg_is_required">It is required</string>
     <string name="msg_email_invalid">This email is invalid.</string>
     <string name="msg_date_invalid">The date must be between 01.01.1900 – 31.12.2019.</string>
+    <string name="msg_submission_failed">Unfortunately this email already exists.</string>
 </resources>

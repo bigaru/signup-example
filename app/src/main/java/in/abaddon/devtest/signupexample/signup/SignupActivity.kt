@@ -36,7 +36,8 @@ class SignupActivity : AppCompatActivity() {
     private fun renderEffects(viewState: ViewState){
         when(viewState.effect){
             is ShowToast -> {
-                Toast.makeText(this, viewState.effect.msg, Toast.LENGTH_SHORT).show()
+                val msg = getString(viewState.effect.msgId)
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                 viewModel.dispatch(ToastDisplayed)
             }
         }
