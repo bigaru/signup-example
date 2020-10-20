@@ -1,5 +1,6 @@
 package `in`.abaddon.devtest.signupexample.confirmation
 
+import `in`.abaddon.devtest.signupexample.R
 import `in`.abaddon.devtest.signupexample.UnidirectedViewModel
 import `in`.abaddon.devtest.signupexample.model.UserDB
 import androidx.lifecycle.viewModelScope
@@ -15,7 +16,17 @@ class ConfirmationViewModel @Inject constructor(
         private val reducer: (ViewState, Action) -> ViewState = { prevState, action ->
             when(action){
                 is LoadUser -> prevState.copy(isLoading = true)
-                is UserLoaded -> prevState.copy(isLoading = false, user = action.user)
+                is UserLoaded -> prevState.copy(
+                    isLoading = false,
+                    user = action.user,
+                    heroText = R.string.hero_text_successful,
+                    heroColor = R.color.colorAccent
+                )
+                is UserLoadFailed -> prevState.copy(
+                    isLoading = false,
+                    heroText = R.string.hero_text_failure,
+                    heroColor = R.color.failure
+                )
             }
         }
     }
@@ -36,7 +47,7 @@ class ConfirmationViewModel @Inject constructor(
             if(maybeUser != null){
                 dispatch(UserLoaded(maybeUser))
             } else {
-                // TODO handle not found case
+                dispatch(UserLoadFailed)
             }
         }
     }

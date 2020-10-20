@@ -28,8 +28,6 @@ class ConfirmationActivity : AppCompatActivity() {
         root.lifecycleOwner = this
 
         val createdId = intent.getLongExtra(NEWLY_CREATED_ID, -1)
-        if(createdId != -1L){
-            viewModel.dispatch(LoadUser(createdId))
-        }
+        viewModel.dispatch(LoadUser(createdId))
     }
 }

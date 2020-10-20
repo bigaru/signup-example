@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="vm"
             type="in.abaddon.devtest.signupexample.confirmation.ConfirmationViewModel" />
@@ -18,7 +19,7 @@
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorAccent"
+            app:nullableBackground="@{vm.viewState.heroColor}"
             app:layout_constraintBottom_toBottomOf="@+id/hero_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:paddingBottom="32dp"
-            android:text="@string/confirmation_hero_text"
+            app:nullableText="@{vm.viewState.heroText}"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content"
             android:text="@string/label_birthday"
             android:textSize="12sp"
+            android:visibility="@{vm.viewState.user != null ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="@+id/birthday"
             app:layout_constraintTop_toBottomOf="@+id/birthday" />
 
@@ -53,6 +55,7 @@
             android:layout_height="wrap_content"
             android:text="@string/label_name"
             android:textSize="12sp"
+            android:visibility="@{vm.viewState.user != null ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="@+id/name"
             app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -104,6 +107,7 @@
             android:layout_height="wrap_content"
             android:text="@string/label_email"
             android:textSize="12sp"
+            android:visibility="@{vm.viewState.user != null ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="@+id/email"
             app:layout_constraintTop_toBottomOf="@+id/email" />
 
