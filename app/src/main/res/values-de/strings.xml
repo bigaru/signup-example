@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_signup">Registrierung</string>
+    <string name="title_confirmation">Bestätigung</string>
+
+    <string name="hint_name">Ihr Name</string>
+    <string name="hint_email">Ihre E-Mail-Adresse</string>
+    <string name="hint_birthday">Ihr Geburtstag tt.mm.jjjj</string>
+
+    <string name="label_register">Registrieren</string>
+    <string name="label_birthday">Geburtstag</string>
+    <string name="label_name">Name</string>
+    <string name="label_email">Email</string>
+
+    <string name="msg_is_required">Es ist erforderlich.</string>
+    <string name="msg_email_invalid">Diese E-Mail ist ungültig.</string>
+    <string name="msg_date_invalid">Das Datum muss zwischen dem 01.01.1900 – 31.12.2019 liegen.</string>
+    <string name="msg_submission_failed">Leider existiert diese E-Mail bereits.</string>
+
+    <string name="hero_text_successful">Danke für die Registrierung</string>
+    <string name="hero_text_failure">Ein Fehler ist aufgetreten</string>
+</resources>
