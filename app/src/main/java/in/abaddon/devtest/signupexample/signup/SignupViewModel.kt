@@ -1,13 +1,11 @@
 package `in`.abaddon.devtest.signupexample.signup
 
 import `in`.abaddon.devtest.signupexample.R
+import `in`.abaddon.devtest.signupexample.UnidirectedViewModel
 import `in`.abaddon.devtest.signupexample.Validator
 import `in`.abaddon.devtest.signupexample.model.User
 import `in`.abaddon.devtest.signupexample.model.UserDB
 import android.database.sqlite.SQLiteConstraintException
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +14,7 @@ import javax.inject.Inject
 class SignupViewModel @Inject constructor(
     val validator: Validator,
     val userDB: UserDB
-): ViewModel(){
+): UnidirectedViewModel<Action,ViewState>(ViewState(),reducer){
     companion object {
         // keep it inside companion object to enforce to be free of side-effects
         private val reducer: (ViewState, Action) -> ViewState = { prevState, action ->
@@ -37,27 +35,7 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    private val _action: MutableLiveData<Action> = MutableLiveData()
-    private val _viewState: MutableLiveData<ViewState> = MutableLiveData(ViewState())
-    val viewState: LiveData<ViewState> = _viewState
-
-    init {
-        _action.observeForever{
-            reduce(it)
-            handleActions(it)
-        }
-    }
-
-    fun dispatch(action: Action){
-        _action.postValue(action)
-    }
-
-    private fun reduce(action: Action){
-        val newState = reducer(_viewState.value!!, action)
-        _viewState.postValue(newState)
-    }
-
-    private fun handleActions(action: Action){
+    override fun handleActions(action: Action){
         when(action){
             is NameEntered -> {
                 val maybeMsg = validator.validateName(action.newValue)
@@ -94,9 +72,9 @@ class SignupViewModel @Inject constructor(
 
             try {
                 val id = dao.insert(user)
-                _action.postValue(DataInserted(id))
+                dispatch(DataInserted(id))
             } catch (e: SQLiteConstraintException){
-                _action.postValue(DataInsertionFailed(R.string.msg_submission_failed))
+                dispatch(DataInsertionFailed(R.string.msg_submission_failed))
             }
         }
     }
