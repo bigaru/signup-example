@@ -17,8 +17,7 @@ class SignupViewModel @Inject constructor(
     val userDB: UserDB
 ): ViewModel(){
     companion object {
-        private val initialState = ViewState("", null, "", null, "", null, null)
-
+        // keep it inside companion object to enforce to be free of side-effects
         private val reducer: (ViewState, Action) -> ViewState = { prevState, action ->
             when(action){
                 is NameEntered -> prevState.copy(name = action.newValue)
@@ -29,16 +28,16 @@ class SignupViewModel @Inject constructor(
                 is EmailValidated -> prevState.copy(emailError = action.msg)
                 is BirthdayValidated -> prevState.copy(birthdayError = action.msg)
 
-                is SubmitPressed -> prevState
-                is DataInserted -> prevState.copy(effect = ShowToast("User inserted: ${action.id}"))
-                is DataInsertionFailed -> prevState.copy(effect = ShowToast(action.msg))
+                is SubmitPressed -> prevState.copy(isLoading = true)
+                is DataInserted -> prevState.copy(effect = ShowToast("User inserted: ${action.id}"), isLoading = false)
+                is DataInsertionFailed -> prevState.copy(effect = ShowToast(action.msg), isLoading = false)
                 is ToastDisplayed -> prevState.copy(effect = null)
             }
         }
     }
 
     private val _action: MutableLiveData<Action> = MutableLiveData()
-    private val _viewState: MutableLiveData<ViewState> = MutableLiveData(initialState)
+    private val _viewState: MutableLiveData<ViewState> = MutableLiveData(ViewState())
     val viewState: LiveData<ViewState> = _viewState
 
     init {
@@ -88,6 +87,9 @@ class SignupViewModel @Inject constructor(
             val user = User(0, state.name, state.email, state.birthday)
 
             val dao = userDB.userDao()
+
+            // simulate any potential delays
+            //delay(5000)
 
             try {
                 val id = dao.insert(user)

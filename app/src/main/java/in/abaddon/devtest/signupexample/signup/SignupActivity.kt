@@ -30,7 +30,6 @@ class SignupActivity : AppCompatActivity() {
         root.lifecycleOwner = this
 
         root.submitButton.setOnClickListener { viewModel.dispatch(SubmitPressed) }
-
         viewModel.viewState.observe(this, {renderEffects(it)})
     }
 
