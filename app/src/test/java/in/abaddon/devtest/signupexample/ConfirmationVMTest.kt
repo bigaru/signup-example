@@ -39,75 +39,62 @@ class ConfirmationVMTest {
     @Before
     fun setup(){
         vm = ConfirmationViewModel(testDispatcher, userDao)
+        vm.viewState.observeForever(observer)
+
         `when`(userDao.findById(42)).thenReturn(user42)
     }
 
     @Test
     fun `Given existing user, VM loads user`() = runBlockingTest {
-        vm.viewState.observeForever(observer)
         vm.dispatch(LoadUser(42))
 
         val captor = ArgumentCaptor.forClass(ViewState::class.java)
-        verify(observer, times(3)).onChanged(captor.capture())
+        verify(observer, atLeastOnce()).onChanged(captor.capture())
         assertEquals(user42, captor.value.user)
-
-        vm.viewState.removeObserver(observer)
     }
 
     @Test
     fun `Given existing user, VM displays successful hero text and color`()  = runBlockingTest {
-        vm.viewState.observeForever(observer)
         vm.dispatch(LoadUser(42))
 
         val captor = ArgumentCaptor.forClass(ViewState::class.java)
-        verify(observer, times(3)).onChanged(captor.capture())
+        verify(observer, atLeastOnce()).onChanged(captor.capture())
 
         val actual = captor.value
         assertEquals(R.color.colorAccent, actual.heroColor)
         assertEquals(R.string.hero_text_successful, actual.heroText)
-
-        vm.viewState.removeObserver(observer)
     }
 
     @Test
     fun `VM sets the flag to on,off during loading`() = runBlockingTest {
-        vm.viewState.observeForever(observer)
         vm.dispatch(LoadUser(42))
 
         val captor = ArgumentCaptor.forClass(ViewState::class.java)
-        verify(observer, times(3)).onChanged(captor.capture())
+        verify(observer, atLeastOnce()).onChanged(captor.capture())
 
         assertFalse(captor.allValues[0].isLoading)
         assert(captor.allValues[1].isLoading)
         assertFalse(captor.allValues[2].isLoading)
-
-        vm.viewState.removeObserver(observer)
     }
 
     @Test
     fun `Given non-existing user, VM returns null`() = runBlockingTest {
-        vm.viewState.observeForever(observer)
         vm.dispatch(LoadUser(-1))
 
         val captor = ArgumentCaptor.forClass(ViewState::class.java)
-        verify(observer, times(3)).onChanged(captor.capture())
+        verify(observer, atLeastOnce()).onChanged(captor.capture())
         assertEquals(null, captor.value.user)
-
-        vm.viewState.removeObserver(observer)
     }
 
     @Test
     fun `Given non-existing user, VM displays failure hero text and color`() = runBlockingTest {
-        vm.viewState.observeForever(observer)
         vm.dispatch(LoadUser(-1))
 
         val captor = ArgumentCaptor.forClass(ViewState::class.java)
-        verify(observer, times(3)).onChanged(captor.capture())
+        verify(observer, atLeastOnce()).onChanged(captor.capture())
 
         val actual = captor.value
         assertEquals(R.color.failure, actual.heroColor)
         assertEquals(R.string.hero_text_failure, actual.heroText)
-
-        vm.viewState.removeObserver(observer)
     }
 }

@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 class SignupViewModel @Inject constructor(
     private val IOdispatcher: CoroutineDispatcher,
-    val validator: Validator,
-    val userDao: UserDao
+    private val validator: Validator,
+    private val userDao: UserDao
 ): UnidirectedViewModel<Action,ViewState>(ViewState(),reducer){
     companion object {
         // keep it inside companion object to enforce to be free of side-effects
@@ -53,11 +53,7 @@ class SignupViewModel @Inject constructor(
                 dispatch(BirthdayValidated(maybeMsg))
             }
 
-            is SubmitPressed -> {
-                if(viewState.value!!.isSubmitable()){
-                    persistData()
-                }
-            }
+            is SubmitPressed -> persistData()
         }
     }
 
