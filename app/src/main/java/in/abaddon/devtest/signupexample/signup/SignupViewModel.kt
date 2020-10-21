@@ -7,11 +7,12 @@ import `in`.abaddon.devtest.signupexample.model.User
 import `in`.abaddon.devtest.signupexample.model.UserDao
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SignupViewModel @Inject constructor(
+    private val IOdispatcher: CoroutineDispatcher,
     val validator: Validator,
     val userDao: UserDao
 ): UnidirectedViewModel<Action,ViewState>(ViewState(),reducer){
@@ -61,7 +62,7 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun persistData(){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(IOdispatcher) {
             val state = viewState.value!!
             val user = User(0, state.name, state.email, state.birthday)
 

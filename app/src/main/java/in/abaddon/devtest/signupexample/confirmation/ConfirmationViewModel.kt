@@ -4,11 +4,12 @@ import `in`.abaddon.devtest.signupexample.R
 import `in`.abaddon.devtest.signupexample.UnidirectedViewModel
 import `in`.abaddon.devtest.signupexample.model.UserDao
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ConfirmationViewModel @Inject constructor(
+    private val IOdispatcher: CoroutineDispatcher,
     val userDao: UserDao
 ): UnidirectedViewModel<Action,ViewState>(ViewState(), reducer){
     companion object {
@@ -38,7 +39,7 @@ class ConfirmationViewModel @Inject constructor(
     }
 
     private fun fetchUser(id: Long){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(IOdispatcher) {
             val maybeUser = userDao.findById(id)
 
             // simulate any potential delays
